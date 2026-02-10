@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablero de Evaluación – Ventana o Vending 24/7</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Modern Reset & Base */
         :root {
-            /* Brand Colors */
             --color-primary: #083fa0;
-            /* Deep Blue */
             --color-primary-light: #e6ebf5;
             --color-accent: #f98512;
-            /* Vibrant Orange */
             --color-accent-hover: #e0740f;
-            /* Status Colors */
             --color-success: #10b981;
-            /* Vivid Green */
             --color-warning: #f59e0b;
-            /* Amber */
             --color-danger: #ef4444;
-            /* Red */
-            /* Neutrals */
             --color-bg: #f8fafc;
             --color-card: #ffffff;
             --color-text-main: #1e293b;
@@ -36,9 +28,7 @@
             --radius-lg: 16px;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -55,7 +45,6 @@
             padding: 40px 20px;
         }
 
-        /* Main Card */
         .card {
             background-color: var(--color-card);
             border-radius: var(--radius-lg);
@@ -64,7 +53,6 @@
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        /* Header */
         header {
             text-align: center;
             margin-bottom: 40px;
@@ -94,7 +82,6 @@
             margin: 0;
         }
 
-        /* Sections */
         section {
             margin-bottom: 30px;
         }
@@ -118,14 +105,12 @@
             border-radius: 2px;
         }
 
-        /* Checkbox Grid */
         .items-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 16px;
         }
 
-        /* Item Styling */
         .item {
             display: flex;
             align-items: center;
@@ -181,9 +166,7 @@
             border-color: var(--color-primary);
         }
 
-        .item input[type="checkbox"]:checked::before {
-            transform: scale(1);
-        }
+        .item input[type="checkbox"]:checked::before { transform: scale(1); }
 
         .label {
             flex-grow: 1;
@@ -206,33 +189,26 @@
             color: white;
         }
 
-        /* Negative values styling */
-        #alert-items .item:hover {
-            border-color: var(--color-danger);
-        }
+        #alert-items .item:hover { border-color: var(--color-danger); }
 
         #alert-items .item.checked {
             background-color: #fef2f2;
             border-color: var(--color-danger);
         }
 
-        #alert-items .item.checked .value {
-            background-color: var(--color-danger);
-        }
+        #alert-items .item.checked .value { background-color: var(--color-danger); }
 
         #alert-items .item input[type="checkbox"]:checked {
             background-color: var(--color-danger);
             border-color: var(--color-danger);
         }
 
-        /* Results Section */
         .results-container {
             margin-top: 40px;
             padding-top: 30px;
             border-top: 2px dashed var(--color-border);
         }
 
-        /* Total Score */
         .total-wrapper {
             background: linear-gradient(135deg, #fff7ed 0%, #fff1e0 100%);
             border: 1px solid #fed7aa;
@@ -257,7 +233,6 @@
             line-height: 1;
         }
 
-        /* Traffic Light & Scenarios */
         .analysis-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -265,9 +240,7 @@
         }
 
         @media (max-width: 700px) {
-            .analysis-grid {
-                grid-template-columns: 1fr;
-            }
+            .analysis-grid { grid-template-columns: 1fr; }
         }
 
         .viability-box {
@@ -284,11 +257,7 @@
             margin-bottom: 15px;
         }
 
-        .traffic-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        .traffic-list { list-style: none; padding: 0; margin: 0; }
 
         .traffic-list li {
             display: flex;
@@ -319,12 +288,7 @@
             transform: scale(1.2);
         }
 
-        /* Scenarios Cards */
-        .scenarios-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .scenarios-wrapper { display: flex; flex-direction: column; gap: 12px; }
 
         .scenario {
             padding: 16px;
@@ -343,20 +307,11 @@
             box-shadow: var(--shadow-md);
         }
 
-        .scenario.high.active {
-            border-color: var(--color-success);
-            background-color: #ecfdf5;
-        }
+        .scenario.high.active { border-color: var(--color-success); background-color: #ecfdf5; }
 
-        .scenario.medium.active {
-            border-color: var(--color-warning);
-            background-color: #fffbeb;
-        }
+        .scenario.medium.active { border-color: var(--color-warning); background-color: #fffbeb; }
 
-        .scenario.low.active {
-            border-color: var(--color-danger);
-            background-color: #fef2f2;
-        }
+        .scenario.low.active { border-color: var(--color-danger); background-color: #fef2f2; }
 
         .scenario-title {
             font-weight: 800;
@@ -366,29 +321,13 @@
             letter-spacing: 0.05em;
         }
 
-        .scenario.high .scenario-title {
-            color: var(--color-success);
-        }
+        .scenario.high .scenario-title { color: var(--color-success); }
+        .scenario.medium .scenario-title { color: var(--color-warning); }
+        .scenario.low .scenario-title { color: var(--color-danger); }
 
-        .scenario.medium .scenario-title {
-            color: var(--color-warning);
-        }
+        .scenario-range { font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); }
 
-        .scenario.low .scenario-title {
-            color: var(--color-danger);
-        }
-
-        .scenario-range {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--color-text-muted);
-        }
-
-        /* WhatsApp Button */
-        .whatsapp-section {
-            text-align: center;
-            margin-top: 40px;
-        }
+        .whatsapp-section { text-align: center; margin-top: 40px; }
 
         .btn-whatsapp {
             display: inline-flex;
@@ -411,7 +350,6 @@
             box-shadow: 0 6px 20px rgba(249, 133, 18, 0.23);
         }
 
-        /* Note */
         .note {
             text-align: center;
             color: var(--color-text-muted);
@@ -421,32 +359,19 @@
         }
 
         @media (max-width: 600px) {
-            .card {
-                padding: 24px 20px;
-            }
-
-            .items-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .total-wrapper {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-
-            .btn-whatsapp {
-                width: 100%;
-            }
+            .card { padding: 24px 20px; }
+            .items-grid { grid-template-columns: 1fr; }
+            .total-wrapper { flex-direction: column; gap: 10px; text-align: center; }
+            .btn-whatsapp { width: 100%; }
         }
-    </style></head>
-
-<body class="">
+    </style>
+</head>
+<body>
     <div class="container">
         <div class="card">
             <header>
                 <div class="logo-container">
-                    <img src="https://raw.githubusercontent.com/marketing57813-oss/Herramientas/main/agranel_logo.png" alt="Agranel 24/7 Logo" class="logo">
+                    <img src="agranel_logo.png" alt="Agranel 24/7 Logo" class="logo">
                 </div>
                 <h1>Tablero de Evaluación – Ventana o Vending 24/7</h1>
                 <p class="subtitle">Analiza la viabilidad de tu punto de venta en segundos.</p>
@@ -484,7 +409,7 @@
             </section>
 
             <section>
-                <div class="section-title">Seguridad y Tráfico</div>
+                <div class="section-title">Tráfico</div>
                 <div class="items-grid" id="security-items">
                     <label class="item">
                         <input type="checkbox" data-value="2">
@@ -571,7 +496,7 @@
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const pointsDisplay = document.getElementById('total-points');
         const whatsappBtn = document.getElementById('whatsapp-btn');
-        const phone = "523329397842"; // Actualizado con el número real
+        const phone = "523329397842";
 
         const scenarios = {
             high: document.getElementById('scenario-high'),
@@ -603,7 +528,6 @@
 
             pointsDisplay.textContent = total;
 
-            // Reset UI
             Object.values(scenarios).forEach(s => s.classList.remove('active'));
             Object.values(trafficItems).forEach(t => t.classList.remove('active'));
 
@@ -622,7 +546,6 @@
                 status = "RIESGO ALTO (0-3 pts)";
             }
 
-            // Actualizar Link de WhatsApp
             const message = encodeURIComponent(
                 `*Diagnóstico de Viabilidad - Vending 24/7*\n\n` +
                 `*Puntaje Total:* ${total}/10\n` +
@@ -637,7 +560,7 @@
             cb.addEventListener('change', updateResults);
         });
 
-        // Initialize
         updateResults();
     </script>
-</body></html>
+</body>
+</html>
