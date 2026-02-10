@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
-
-<head>
+<html lang="es"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tablero de Evaluación – Ventana o Vending 24/7</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <style>
         /* Modern Reset & Base */
         :root {
@@ -70,6 +68,15 @@
         header {
             text-align: center;
             margin-bottom: 40px;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            max-width: 250px;
+            height: auto;
         }
 
         header h1 {
@@ -432,13 +439,15 @@
                 width: 100%;
             }
         }
-    </style>
-</head>
+    </style></head>
 
-<body>
+<body class="">
     <div class="container">
         <div class="card">
             <header>
+                <div class="logo-container">
+                    <img src="https://raw.githubusercontent.com/marketing57813-oss/Herramientas/main/agranel_logo.png" alt="Agranel 24/7 Logo" class="logo">
+                </div>
                 <h1>Tablero de Evaluación – Ventana o Vending 24/7</h1>
                 <p class="subtitle">Analiza la viabilidad de tu punto de venta en segundos.</p>
             </header>
@@ -479,11 +488,6 @@
                 <div class="items-grid" id="security-items">
                     <label class="item">
                         <input type="checkbox" data-value="2">
-                        <span class="label">Área con cámaras o vigilancia</span>
-                        <span class="value">+2</span>
-                    </label>
-                    <label class="item">
-                        <input type="checkbox" data-value="2">
                         <span class="label">Flujo constante de personas</span>
                         <span class="value">+2</span>
                     </label>
@@ -493,11 +497,6 @@
             <section>
                 <div class="section-title">Alertas Rojas</div>
                 <div class="items-grid" id="alert-items">
-                    <label class="item">
-                        <input type="checkbox" data-value="-2">
-                        <span class="label">Zona con vandalismo frecuente</span>
-                        <span class="value">-2</span>
-                    </label>
                     <label class="item">
                         <input type="checkbox" data-value="-2">
                         <span class="label">Punto poco visible / escondido</span>
@@ -534,7 +533,7 @@
                                 <div class="dot" style="background-color: var(--color-warning);"></div>
                                 <span>4 a 6: Requiere Ajustes</span>
                             </li>
-                            <li id="traffic-low">
+                            <li id="traffic-low" class="active">
                                 <div class="dot" style="background-color: var(--color-danger);"></div>
                                 <span>0 a 3: Riesgo Alto</span>
                             </li>
@@ -550,7 +549,7 @@
                             <div class="scenario-title">Escenario Medio</div>
                             <div class="scenario-range">Rentabilidad Estable con Mejoras</div>
                         </div>
-                        <div class="scenario low" id="scenario-low">
+                        <div class="scenario low active" id="scenario-low">
                             <div class="scenario-title">Escenario Conservador</div>
                             <div class="scenario-range">Revisar ubicación o modelo</div>
                         </div>
@@ -572,7 +571,7 @@
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const pointsDisplay = document.getElementById('total-points');
         const whatsappBtn = document.getElementById('whatsapp-btn');
-        const phone = "523329397842"; // Actualizado con tu número real
+        const phone = "523329397842"; // Actualizado con el número real
 
         const scenarios = {
             high: document.getElementById('scenario-high'),
@@ -641,6 +640,4 @@
         // Initialize
         updateResults();
     </script>
-</body>
-
-</html>
+</body></html>
