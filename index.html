@@ -1,12 +1,646 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Herramientas</title>
-    <script type="module" crossorigin src="/Herramientas/assets/index-BoSe8gAg.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero de Evaluación – Ventana o Vending 24/7</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Reset & Base */
+        :root {
+            /* Brand Colors */
+            --color-primary: #083fa0;
+            /* Deep Blue */
+            --color-primary-light: #e6ebf5;
+            --color-accent: #f98512;
+            /* Vibrant Orange */
+            --color-accent-hover: #e0740f;
+            /* Status Colors */
+            --color-success: #10b981;
+            /* Vivid Green */
+            --color-warning: #f59e0b;
+            /* Amber */
+            --color-danger: #ef4444;
+            /* Red */
+            /* Neutrals */
+            --color-bg: #f8fafc;
+            --color-card: #ffffff;
+            --color-text-main: #1e293b;
+            --color-text-muted: #64748b;
+            --color-border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Main Card */
+        .card {
+            background-color: var(--color-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--color-primary);
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 16px;
+            background-color: var(--color-accent);
+            border-radius: 2px;
+        }
+
+        /* Checkbox Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        /* Item Styling */
+        .item {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .item:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .item.checked {
+            background-color: var(--color-primary-light);
+            border-color: var(--color-primary);
+        }
+
+        .item input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-text-muted);
+            border-radius: 6px;
+            margin-right: 12px;
+            cursor: pointer;
+            display: grid;
+            place-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .item input[type="checkbox"]::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em white;
+            transform-origin: center;
+            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+        }
+
+        .item input[type="checkbox"]:checked {
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .item input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        .label {
+            flex-grow: 1;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--color-text-main);
+        }
+
+        .value {
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background-color: rgba(0, 0, 0, 0.05);
+            margin-left: 8px;
+        }
+
+        .item.checked .value {
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* Negative values styling */
+        #alert-items .item:hover {
+            border-color: var(--color-danger);
+        }
+
+        #alert-items .item.checked {
+            background-color: #fef2f2;
+            border-color: var(--color-danger);
+        }
+
+        #alert-items .item.checked .value {
+            background-color: var(--color-danger);
+        }
+
+        #alert-items .item input[type="checkbox"]:checked {
+            background-color: var(--color-danger);
+            border-color: var(--color-danger);
+        }
+
+        /* Results Section */
+        .results-container {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px dashed var(--color-border);
+        }
+
+        /* Total Score */
+        .total-wrapper {
+            background: linear-gradient(135deg, #fff7ed 0%, #fff1e0 100%);
+            border: 1px solid #fed7aa;
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .total-label {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text-main);
+        }
+
+        .total-score {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-accent);
+            line-height: 1;
+        }
+
+        /* Traffic Light & Scenarios */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 700px) {
+            .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .viability-box {
+            background-color: #f8fafc;
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border: 1px solid var(--color-border);
+        }
+
+        .viability-box h3 {
+            margin-top: 0;
+            color: var(--color-primary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .traffic-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .traffic-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .traffic-list li.active {
+            color: var(--color-text-main);
+            font-weight: 700;
+            transform: translateX(5px);
+            transition: transform 0.2s ease;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+            opacity: 0.3;
+        }
+
+        .traffic-list li.active .dot {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+
+        /* Scenarios Cards */
+        .scenarios-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .scenario {
+            padding: 16px;
+            border-radius: var(--radius-md);
+            border: 2px solid transparent;
+            opacity: 0.4;
+            transition: all 0.3s ease;
+            text-align: center;
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .scenario.active {
+            opacity: 1;
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .scenario.high.active {
+            border-color: var(--color-success);
+            background-color: #ecfdf5;
+        }
+
+        .scenario.medium.active {
+            border-color: var(--color-warning);
+            background-color: #fffbeb;
+        }
+
+        .scenario.low.active {
+            border-color: var(--color-danger);
+            background-color: #fef2f2;
+        }
+
+        .scenario-title {
+            font-weight: 800;
+            margin-bottom: 4px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .scenario.high .scenario-title {
+            color: var(--color-success);
+        }
+
+        .scenario.medium .scenario-title {
+            color: var(--color-warning);
+        }
+
+        .scenario.low .scenario-title {
+            color: var(--color-danger);
+        }
+
+        .scenario-range {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--color-accent);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px 0 rgba(249, 133, 18, 0.39);
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 133, 18, 0.23);
+        }
+
+        /* Note */
+        .note {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 24px 20px;
+            }
+
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-wrapper {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .btn-whatsapp {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <header>
+                <h1>Tablero de Evaluación – Ventana o Vending 24/7</h1>
+                <p class="subtitle">Analiza la viabilidad de tu punto de venta en segundos.</p>
+            </header>
+
+            <section>
+                <div class="section-title">Requisitos Básicos</div>
+                <div class="items-grid" id="basic-items">
+                    <label class="item">
+                        <input type="checkbox" data-value="1">
+                        <span class="label">Conexión eléctrica disponible</span>
+                        <span class="value">+1</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="1">
+                        <span class="label">Acceso a agua (si aplica)</span>
+                        <span class="value">+1</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="1">
+                        <span class="label">Zona visible desde la calle</span>
+                        <span class="value">+1</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="1">
+                        <span class="label">Buena iluminación nocturna</span>
+                        <span class="value">+1</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="1">
+                        <span class="label">Espacio adecuado de instalación</span>
+                        <span class="value">+1</span>
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-title">Seguridad y Tráfico</div>
+                <div class="items-grid" id="security-items">
+                    <label class="item">
+                        <input type="checkbox" data-value="2">
+                        <span class="label">Área con cámaras o vigilancia</span>
+                        <span class="value">+2</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="2">
+                        <span class="label">Flujo constante de personas</span>
+                        <span class="value">+2</span>
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <div class="section-title">Alertas Rojas</div>
+                <div class="items-grid" id="alert-items">
+                    <label class="item">
+                        <input type="checkbox" data-value="-2">
+                        <span class="label">Zona con vandalismo frecuente</span>
+                        <span class="value">-2</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="-2">
+                        <span class="label">Punto poco visible / escondido</span>
+                        <span class="value">-2</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="-2">
+                        <span class="label">Tráfico peatonal nulo o bajo</span>
+                        <span class="value">-2</span>
+                    </label>
+                    <label class="item">
+                        <input type="checkbox" data-value="-2">
+                        <span class="label">Competencia directa muy cerca</span>
+                        <span class="value">-2</span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="results-container">
+                <div class="total-wrapper">
+                    <span class="total-label">Tu Puntaje de Viabilidad:</span>
+                    <span class="total-score" id="total-points">0</span>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="viability-box">
+                        <h3>Semáforo de Estrategia</h3>
+                        <ul class="traffic-list">
+                            <li id="traffic-high">
+                                <div class="dot" style="background-color: var(--color-success);"></div>
+                                <span>7 a 10: Punto Ideal</span>
+                            </li>
+                            <li id="traffic-medium">
+                                <div class="dot" style="background-color: var(--color-warning);"></div>
+                                <span>4 a 6: Requiere Ajustes</span>
+                            </li>
+                            <li id="traffic-low">
+                                <div class="dot" style="background-color: var(--color-danger);"></div>
+                                <span>0 a 3: Riesgo Alto</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="scenarios-wrapper">
+                        <div class="scenario high" id="scenario-high">
+                            <div class="scenario-title">Escenario Alto</div>
+                            <div class="scenario-range">Proyección de Rentabilidad Óptima</div>
+                        </div>
+                        <div class="scenario medium" id="scenario-medium">
+                            <div class="scenario-title">Escenario Medio</div>
+                            <div class="scenario-range">Rentabilidad Estable con Mejoras</div>
+                        </div>
+                        <div class="scenario low" id="scenario-low">
+                            <div class="scenario-title">Escenario Conservador</div>
+                            <div class="scenario-range">Revisar ubicación o modelo</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="whatsapp-section">
+                <a href="#" class="btn-whatsapp" id="whatsapp-btn">
+                    Enviar Diagnóstico por WhatsApp
+                </a>
+            </div>
+
+            <p class="note">Nota: Este tablero es una herramienta orientativa basada en promedios de mercado.</p>
+        </div>
+    </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const pointsDisplay = document.getElementById('total-points');
+        const whatsappBtn = document.getElementById('whatsapp-btn');
+        const phone = "523329397842"; // Actualizado con tu número real
+
+        const scenarios = {
+            high: document.getElementById('scenario-high'),
+            medium: document.getElementById('scenario-medium'),
+            low: document.getElementById('scenario-low')
+        };
+        const trafficItems = {
+            high: document.getElementById('traffic-high'),
+            medium: document.getElementById('traffic-medium'),
+            low: document.getElementById('traffic-low')
+        };
+
+        function updateResults() {
+            let total = 0;
+            let selectedItems = [];
+
+            checkboxes.forEach(cb => {
+                const item = cb.closest('.item');
+                const label = item.querySelector('.label').textContent;
+
+                if (cb.checked) {
+                    total += parseInt(cb.dataset.value);
+                    item.classList.add('checked');
+                    selectedItems.push(`✅ ${label}`);
+                } else {
+                    item.classList.remove('checked');
+                }
+            });
+
+            pointsDisplay.textContent = total;
+
+            // Reset UI
+            Object.values(scenarios).forEach(s => s.classList.remove('active'));
+            Object.values(trafficItems).forEach(t => t.classList.remove('active'));
+
+            let status = "";
+            if (total >= 7) {
+                scenarios.high.classList.add('active');
+                trafficItems.high.classList.add('active');
+                status = "IDEAL (7-10 pts)";
+            } else if (total >= 4) {
+                scenarios.medium.classList.add('active');
+                trafficItems.medium.classList.add('active');
+                status = "VIABLE CON AJUSTES (4-6 pts)";
+            } else {
+                scenarios.low.classList.add('active');
+                trafficItems.low.classList.add('active');
+                status = "RIESGO ALTO (0-3 pts)";
+            }
+
+            // Actualizar Link de WhatsApp
+            const message = encodeURIComponent(
+                `*Diagnóstico de Viabilidad - Vending 24/7*\n\n` +
+                `*Puntaje Total:* ${total}/10\n` +
+                `*Estado:* ${status}\n\n` +
+                `*Factores detectados:*\n${selectedItems.join('\n')}\n\n` +
+                `Hola, acabo de completar mi tablero de evaluación. Me gustaría recibir asesoría sobre estos resultados.`
+            );
+            whatsappBtn.href = `https://wa.me/${phone}?text=${message}`;
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', updateResults);
+        });
+
+        // Initialize
+        updateResults();
+    </script>
+</body>
+
 </html>
